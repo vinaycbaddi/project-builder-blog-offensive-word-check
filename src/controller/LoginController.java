@@ -12,39 +12,34 @@ import javax.servlet.http.HttpServletResponse;
 import businesslogic.ValidateUser;
 import model.User;
 
-
-@WebServlet(urlPatterns= {"/login"})
+@WebServlet(urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public LoginController() {
-        super();
+	public LoginController() {
+		super();
 
-    }
-
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
-	rd.forward(request, response);
 	}
 
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+		rd.forward(request, response);
+	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email"); 
-		String password = request.getParameter("password"); 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		ValidateUser validateUser = new ValidateUser();
-		if(validateUser.validate(email,password)) {
-			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/blogView.jsp");
+		if (validateUser.validate(email, password)) {
+			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/blogView.jsp");
 			rd.forward(request, response);
-		}else
-		{
-			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
+		} else {
+			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/loginView.jsp");
 			rd.forward(request, response);
 		}
-		
-		
-		
-		
+
 	}
 
 }

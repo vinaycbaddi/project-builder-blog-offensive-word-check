@@ -14,38 +14,35 @@ import javax.servlet.http.HttpServletResponse;
 import businesslogic.RegistrationValidation;
 import model.User;
 
-
-@WebServlet(urlPatterns= {"/signup"})
+@WebServlet(urlPatterns = { "/signup" })
 public class SignUpController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public SignUpController() {
-        super();
-       
-    }
+	public SignUpController() {
+		super();
 
+	}
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
 		rd.forward(request, response);
 	}
 
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email"); 
-		String password = request.getParameter("password"); 
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("confirmPassword");
-		LocalDateTime date= LocalDateTime.now(); 
+		LocalDateTime date = LocalDateTime.now();
 		System.out.println(email);
 		System.out.println(password);
 		System.out.println(confirmPassword);
-		
-		RegistrationValidation checkUser=new RegistrationValidation();
-		
-		if(checkUser.checkUserDetails(email, password, confirmPassword))
-		{
-			User user=new User(email,password,date);
+
+		RegistrationValidation checkUser = new RegistrationValidation();
+
+		if (checkUser.checkUserDetails(email, password, confirmPassword)) {
+			User user = new User(email, password, date);
 			user.setEmail(email);
 			user.setPassword(password);
 			user.setDate(date);
@@ -53,17 +50,14 @@ public class SignUpController extends HttpServlet {
 			System.out.println(user.getPassword());
 			System.out.println(user.getDate());
 			request.setAttribute("message", "Registration Successful");
-			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
+			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
 			rd.forward(request, response);
-		}
-		else
-		{
+		} else {
 			request.setAttribute("message", "Check your email and password");
-			RequestDispatcher rd=this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
+			RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/WEB-INF/views/signupView.jsp");
 			rd.forward(request, response);
 		}
-		
-		
+
 	}
 
 }
